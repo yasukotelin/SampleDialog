@@ -6,8 +6,11 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 
 import com.example.sampledialog.R
+import com.example.sampledialog.ui.dialog.CustomDialog
 import com.example.sampledialog.ui.dialog.SimpleDialog
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -29,9 +32,14 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         simpleDialogButton.setOnClickListener { onClickSimpleDialogButton() }
+        customDialogButton.setOnClickListener { onClickCustomDialogButton() }
     }
 
     private fun onClickSimpleDialogButton() {
-        SimpleDialog().show(fragmentManager, "tag")
+        SimpleDialog().show(fragmentManager, "simpleDialog")
+    }
+
+    private fun onClickCustomDialogButton() {
+        CustomDialog().show(fragmentManager, "customDialog")
     }
 }
