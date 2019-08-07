@@ -19,19 +19,38 @@ class CustomDialog : DialogFragment() {
     var heightTextView: TextView? = null
     var phoneEditText: EditText? = null
 
+    // Fragmentなので引数受け取りはFragmentのイディオムを使って受け取る
+    companion object {
+        private const val ARG_NAME = "argName"
+        private const val ARG_AGE = "argAge"
+        private const val ARG_HEIGHT = "argHeight"
+
+        fun newInstance(name: String, age: String, height: String): CustomDialog {
+            val f = CustomDialog()
+            f.arguments = Bundle().apply {
+                putString(ARG_NAME, name)
+                putString(ARG_AGE, age)
+                putString(ARG_HEIGHT, height)
+            }
+            return f
+        }
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // **NOTE**
         // findViewByIdは直接Viewから取得する必要がある。
         // dialog.findViewByIdはshow()されている状態でないとnullを返却するため注意
-        dialogView = activity?.layoutInflater?.inflate(R.layout.dialog_custom, null, false)
-        nameTextView = dialogView?.findViewById(R.id.nameTextView)
-        ageTextView = dialogView?.findViewById(R.id.ageTextView)
-        heightTextView = dialogView?.findViewById(R.id.heightTextView)
-        phoneEditText = dialogView?.findViewById(R.id.phoneEditText)
+        if (dialogView == null) {
+            dialogView = activity?.layoutInflater?.inflate(R.layout.dialog_custom, null, false)
+            nameTextView = dialogView?.findViewById(R.id.nameTextView)
+            ageTextView = dialogView?.findViewById(R.id.ageTextView)
+            heightTextView = dialogView?.findViewById(R.id.heightTextView)
+            phoneEditText = dialogView?.findViewById(R.id.phoneEditText)
+        }
 
-        nameTextView?.text = "Tanaka Taro"
-        ageTextView?.text = "23"
-        heightTextView?.text = "165.8cm"
+        nameTextView?.text = arguments?.getString(ARG_NAME)
+        ageTextView?.text = arguments?.getString(ARG_AGE)
+        heightTextView?.text = arguments?.getString(ARG_HEIGHT)
 
         return AlertDialog.Builder(context)
             .setTitle("Custom dialog")

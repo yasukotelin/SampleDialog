@@ -40,6 +40,8 @@ class MainFragment : Fragment() {
     }
 
     private fun onClickCustomDialogButton() {
-        CustomDialog().show(fragmentManager, "customDialog")
+        CustomDialog.newInstance(
+            name = "Tanaka Taro", age = "23", height = "168.2cm"
+        ).show(fragmentManager, "customDialog")
     }
 }
