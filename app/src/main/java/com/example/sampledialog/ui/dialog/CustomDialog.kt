@@ -14,9 +14,9 @@ class CustomDialog : DialogFragment() {
 
     // 呼び出し側がViewの要素にアクセスできるようにフィールドで保持する
     var dialogView: View? = null
-    var nameText: TextView? = null
-    var ageText: TextView? = null
-    var heightText: TextView? = null
+    var nameTextView: TextView? = null
+    var ageTextView: TextView? = null
+    var heightTextView: TextView? = null
     var phoneEditText: EditText? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -24,12 +24,16 @@ class CustomDialog : DialogFragment() {
         // findViewByIdは直接Viewから取得する必要がある。
         // dialog.findViewByIdはshow()されている状態でないとnullを返却するため注意
         dialogView = activity?.layoutInflater?.inflate(R.layout.dialog_custom, null, false)
-        nameText = dialogView?.findViewById(R.id.nameText)
-        ageText = dialogView?.findViewById(R.id.ageText)
-        heightText = dialogView?.findViewById(R.id.heightText)
+        nameTextView = dialogView?.findViewById(R.id.nameTextView)
+        ageTextView = dialogView?.findViewById(R.id.ageTextView)
+        heightTextView = dialogView?.findViewById(R.id.heightTextView)
         phoneEditText = dialogView?.findViewById(R.id.phoneEditText)
 
-        val dialog = AlertDialog.Builder(context)
+        nameTextView?.text = "Tanaka Taro"
+        ageTextView?.text = "23"
+        heightTextView?.text = "165.8cm"
+
+        return AlertDialog.Builder(context)
             .setTitle("Custom dialog")
             .setView(dialogView)
             .setPositiveButton("ok") { _, _ ->
@@ -40,11 +44,5 @@ class CustomDialog : DialogFragment() {
                 Toast.makeText(context, "Click cancel!", Toast.LENGTH_SHORT).show()
             }
             .create()
-
-        nameText?.text = "Tanaka Taro"
-        ageText?.text = "23"
-        heightText?.text = "165.8cm"
-
-        return dialog
     }
 }
